@@ -1,0 +1,58 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="TopApps.GroupEventPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="White">
+        <!--Pivot Control-->
+        <StackPanel HorizontalAlignment="Center" Height="135" Margin="15,10,15,0" VerticalAlignment="Top" Width="450">
+        	<StackPanel.Background>
+        		<ImageBrush Stretch="Fill" ImageSource="/Assets/Images/GroupPicture.jpg"/>
+        	</StackPanel.Background>
+        	<StackPanel HorizontalAlignment="Left" Height="36" VerticalAlignment="Bottom" Width="450" Background="#FF66D2B7" Opacity="0.75" Margin="0,100,0,0">
+        		<TextBlock x:Name="tbGroupName" TextWrapping="Wrap" Text="Group Name" Foreground="White" Margin="10,0,0,0"/>
+        	</StackPanel>
+        </StackPanel>
+        <!--Pivot Control-->
+        <controls:Pivot Title="" Margin="0,145,0,0" Foreground="#FF66D2B7" Background="Transparent">
+            <!--Pivot item one-->
+            <controls:PivotItem x:Name="InfoItem" Header="Info" Foreground="#FF66D2B7" Background="Transparent" Margin="12,0" >
+                <Grid>
+                	
+                </Grid>
+            </controls:PivotItem>
+
+            <!--Pivot item two-->
+            <controls:PivotItem x:Name="EventItem" Header="Events" Foreground="#FF66D2B7" FontSize="12" Margin="12,0">
+                <Grid>
+					<StackPanel HorizontalAlignment="Left" Height="85" Margin="0" VerticalAlignment="Top" Width="456" Background="#FF66D2B7">
+                		<TextBlock x:Name="txtEventName" Text="Event Name" Height="41" Margin="10,0,0,0" TextWrapping="Wrap" Foreground="#FFFBFBFB" FontSize="32" />
+						<TextBlock x:Name="tbEventDate" Text="Date" Height="41" Margin="10,0,0,0" TextWrapping="Wrap" Foreground="#FFFBFBFB" FontSize="21.333" />
+                	</StackPanel>
+				</Grid>
+            </controls:PivotItem>
+
+			<!--Pivot item three-->
+            <controls:PivotItem x:Name="MembersItem" Header="Members" Foreground="#FF66D2B7" FontSize="12" Margin="12,0">
+                <Grid>
+					<StackPanel HorizontalAlignment="Left" Height="90" Margin="0" VerticalAlignment="Top" Width="90" Background="#FF66D2B7">
+						<Image x:Name="ImgMembers" Height="90"/>
+                	</StackPanel>
+				</Grid>
+            </controls:PivotItem>
+        </controls:Pivot>
+    </Grid>
+    
+</phone:PhoneApplicationPage>

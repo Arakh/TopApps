@@ -1,0 +1,47 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="TopApps.CreateGroupPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+
+        <!--ContentPanel - place additional content here-->
+        <Canvas HorizontalAlignment="Left" Height="25" Margin="0" VerticalAlignment="Top" Width="480" Background="#FF66D2B7"/>
+    <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        	<StackPanel HorizontalAlignment="Center" Height="591" Margin="0,49,0,0" VerticalAlignment="Top" Width="456">
+        		<StackPanel.Background>
+        			<ImageBrush Stretch="Fill"/>
+        		</StackPanel.Background>
+        		<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="GROUP NAME" VerticalAlignment="Top" Foreground="#FF66D2B7" FontWeight="Bold" Margin="15,0,0,0"/>
+        		<TextBox x:Name="tbGroupName" Height="75" TextWrapping="Wrap" Text="TextBox" Width="450" Background="#BFFFFFFF" BorderBrush="#FF66D2B7" Margin="3,0" Foreground="#FF66D2B7"/>
+        		<TextBlock Margin="15,15,266,0" TextWrapping="Wrap" Foreground="#FF66D2B7" FontWeight="Bold" Height="30" Text="DESCRIPTION
+"/>
+        		<TextBox x:Name="tbDescription" Height="250" TextWrapping="Wrap" Text="TextBox" BorderBrush="#FF66D2B7" Foreground="#FF66D2B7"/>
+        		<TextBlock Margin="15,15,266,0" TextWrapping="Wrap" Foreground="#FF66D2B7" FontWeight="Bold" Height="30" Text="GROUP PICTURE
+"/>
+        		<StackPanel Margin="15,0" Background="#FF66D2B7">
+        			<Image x:Name="groupPicture" Margin="3" Source="/TopApps;component/Assets/Images/AddGroupPicture.jpg" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        		</StackPanel>
+        	</StackPanel>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>
