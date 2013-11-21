@@ -20,5 +20,15 @@ namespace TopApps
         {
             InitializeComponent();
         }
+
+        private void btnSignIn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Views/HomePage.xaml", UriKind.Relative));
+        }
+
+        private void btnSignUp_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/HomePage.xaml", UriKind.Relative));
+        }
     }
 }

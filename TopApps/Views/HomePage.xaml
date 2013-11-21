@@ -59,45 +59,51 @@
 			<!--Pivot item two-->
             <controls:PivotItem x:Name="ProfileItem" Header="My Profile">
                 <Grid>
-                	<StackPanel HorizontalAlignment="Center" Margin="-2,10,3,0" VerticalAlignment="Top" Width="450">
-                		<StackPanel Height="164" Margin="10,0,40,0" Orientation="Horizontal">
-                            <StackPanel HorizontalAlignment="Left" Height="150" Margin="0" VerticalAlignment="Top" Width="150" Background="#FF00B487">
-                                <Image x:Name="ImgProfile" />
-                            </StackPanel>
-                            <StackPanel Margin="0,10" Width="237">
-                				<TextBlock x:Name="tbName" Height="Auto" Margin="10,0" TextWrapping="Wrap" Text="Full Name" FontWeight="Bold" FontSize="24"/>
-                				<TextBlock x:Name="tbNumberPhone" Height="Auto" Margin="10,10,10,0" TextWrapping="Wrap" Text="Number Phone" FontSize="20"/>
-								<TextBlock x:Name="tbMailAddress" Height="Auto" Margin="10,0" TextWrapping="Wrap" Text="Mail Address" FontSize="20"/>
-								<StackPanel Orientation="Horizontal" Margin="10,0,0,0" HorizontalAlignment="Left" >
-									<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-										<TextBlock x:Name="tbLateNumber" Text="0" TextAlignment="Center"  />
-										<TextBlock Text="late"  />
-									</StackPanel>
-									<StackPanel Margin="10,0,0,0">
-										<TextBlock x:Name="tbMissNumber" Text="0" HorizontalAlignment="Center"  />
-										<TextBlock Text="miss"  />
-									</StackPanel>
-									<StackPanel Margin="10,0,0,0">
-										<TextBlock x:Name="tbOnTimeNumber" Text="0" HorizontalAlignment="Center"  />
-										<TextBlock Text="on time"  />
-									</StackPanel>
-									<StackPanel Margin="10,0,0,0">
-										<TextBlock Text="0" HorizontalAlignment="Center"  />
-										<TextBlock Text="absent"  />
-									</StackPanel>
-								</StackPanel>
-							</StackPanel>
-                		</StackPanel>
-						<TextBlock Text="MY SOMETHING" Margin="10,0,0,0" FontWeight="Bold" FontSize="24" />
-						<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
-							<StackPanel Height="50" Width="350" Margin="10,0,0,0" Background="#FF00B487" HorizontalAlignment="Center" VerticalAlignment="Center" >
-								<TextBlock x:Name="tbGroupNameProfile" TextWrapping="Wrap" Text="Group Name" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="29.333" Margin="5,0,0,0" Foreground="White"/>
-							</StackPanel>
-                            <StackPanel Width="75" Height="75" Background="#FF66D2B7" >
-									<Image x:Name="ImgGroup"/>
-							</StackPanel>
-						</StackPanel>
-                	</StackPanel>
+                    <ListBox x:Name="profileContent">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                	            <StackPanel HorizontalAlignment="Center" Margin="-2,10,3,0" VerticalAlignment="Top" Width="450">
+                		            <StackPanel Height="164" Margin="10,0,40,0" Orientation="Horizontal">
+                                        <StackPanel HorizontalAlignment="Left" Height="150" Margin="0" VerticalAlignment="Top" Width="150" Background="#FF00B487">
+                                            <Image x:Name="ImgProfile" Source="{Binding Photo}" />
+                                        </StackPanel>
+                                        <StackPanel Margin="0,0,0,0" Width="237">
+                				            <TextBlock x:Name="tbName" Height="Auto" Margin="10,0" TextWrapping="Wrap" Text="{Binding Username}" FontWeight="Bold" FontSize="24"/>
+                				            <TextBlock x:Name="tbNumberPhone" Height="Auto" Margin="10,10,10,0" TextWrapping="Wrap" Text="{Binding PhoneNumber}" FontSize="20"/>
+								            <TextBlock x:Name="tbMailAddress" Height="Auto" Margin="10,0" TextWrapping="Wrap" Text="{Binding Email}" FontSize="20"/>
+								            <StackPanel Orientation="Horizontal" Margin="10,0,0,0" HorizontalAlignment="Left" >
+									            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+										            <TextBlock x:Name="tbLateNumber" Text="0" TextAlignment="Center"  />
+										            <TextBlock Text="late"  />
+									            </StackPanel>
+									            <StackPanel Margin="10,0,0,0">
+										            <TextBlock x:Name="tbMissNumber" Text="0" HorizontalAlignment="Center"  />
+										            <TextBlock Text="miss"  />
+									            </StackPanel>
+									            <StackPanel Margin="10,0,0,0">
+										            <TextBlock x:Name="tbOnTimeNumber" Text="0" HorizontalAlignment="Center"  />
+										            <TextBlock Text="on time"  />
+									            </StackPanel>
+									            <StackPanel Margin="10,0,0,0">
+										            <TextBlock Text="0" HorizontalAlignment="Center"  />
+										            <TextBlock Text="absent" Width="65"  />
+									            </StackPanel>
+								            </StackPanel>
+							            </StackPanel>
+                		            </StackPanel>
+						            <TextBlock Text="MY SOMETHING" Margin="10,0,0,0" FontWeight="Bold" FontSize="24" />
+						            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
+							            <StackPanel Height="50" Width="350" Margin="0,0,0,0" Background="#FF00B487" HorizontalAlignment="Center" VerticalAlignment="Center" >
+								            <TextBlock x:Name="tbGroupNameProfile" TextWrapping="Wrap" Text="Group Name" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="29.333" Margin="5,0,0,0" Foreground="White"/>
+							            </StackPanel>
+                                        <StackPanel Width="75" Height="75" Background="#FF66D2B7" >
+									            <Image x:Name="ImgGroup"/>
+							            </StackPanel>
+						            </StackPanel>
+                	            </StackPanel>
+                                </DataTemplate>
+                                </ListBox.ItemTemplate>
+                    </ListBox>
                 </Grid>
             </controls:PivotItem>
         </controls:Pivot>

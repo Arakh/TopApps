@@ -86,6 +86,16 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\BindableBase.cs" />
+    <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\Log.cs" />
+    <Compile Include="Models\Punishment.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserEvent.cs" />
+    <Compile Include="Models\UserGroup.cs" />
+    <Compile Include="Models\Vote.cs" />
+    <Compile Include="ViewModels\UserInfoViewModels.cs" />
     <Compile Include="Views\CreateGroupPage.xaml.cs">
       <DependentUpon>CreateGroupPage.xaml</DependentUpon>
     </Compile>
@@ -164,11 +174,18 @@
     <Resource Include="Assets\Images\AddGroupPicture.jpg" />
     <Resource Include="Assets\Images\GroupPicture.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Controls.Toolkit">
+      <HintPath>..\..\..\Visual Studio 2012\Projects\hyjabs\Hyjabs\Bin\Release\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\Visual Studio 2012\Projects\hyjabs\Hyjabs\Bin\Release\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp.WindowsPhone">
+      <HintPath>..\..\..\Visual Studio 2012\Projects\hyjabs\Hyjabs\Bin\Release\RestSharp.WindowsPhone.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

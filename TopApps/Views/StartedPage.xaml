@@ -28,8 +28,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
     	<StackPanel HorizontalAlignment="Center" Height="155" Margin="0,611,0,2" Grid.RowSpan="2" VerticalAlignment="Center" Width="480">
-    		<Button x:Name="btnSignIn" Content="Sign In With Facebook" Height="75" Margin="0" Width="450" HorizontalAlignment="Center" Opacity="0.6" BorderBrush="#FF34694F" Background="#FF34694F"/>
-    		<Button x:Name="btnSignUp" Content="Sign Up With Facebook" Height="75" Margin="15,0" Width="450" HorizontalAlignment="Center" Opacity="0.6" BorderBrush="#FF34694F" Background="#FF34694F"/>
+    		<Button x:Name="btnSignIn" Content="Sign In With Facebook" Height="75" Margin="0" Width="450" HorizontalAlignment="Center" Opacity="0.6" BorderBrush="#FF34694F" Background="#FF34694F" Click="btnSignIn_Click"/>
+    		<Button x:Name="btnSignUp" Content="Sign Up With Facebook" Height="75" Margin="15,0" Width="450" HorizontalAlignment="Center" Opacity="0.6" BorderBrush="#FF34694F" Background="#FF34694F" Click="btnSignUp_Click"/>
     	</StackPanel>
 
         <!--TitlePanel contains the name of the application and page title-->
