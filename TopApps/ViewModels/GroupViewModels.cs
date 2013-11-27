@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using Newtonsoft.Json.Linq;
 using TopApps.Models;
+using System.Windows.Media.Imaging;
 
 namespace TopApps.ViewModels
 {
     class GroupViewModels : BindableBase
     {
-        private string URL = Resource.URL;
+        private string URL = Resource.BASE_URL;
         private ObservableCollection<Group> _groupCollection = new ObservableCollection<Group>();
         private ObservableCollection<User> _memberGroupsCollection;
         private ObservableCollection<Event> _eventGroupCollection;
@@ -74,7 +75,7 @@ namespace TopApps.ViewModels
                 parameter.AppendFormat("{0}={1}&", "creatorId", HttpUtility.HtmlEncode(group.CreatorId));
                 parameter.AppendFormat("{0}={1}&", "nameGroup", HttpUtility.HtmlEncode(group.GroupName));
                 parameter.AppendFormat("{0}={1}&", "descriptionGroup", HttpUtility.HtmlEncode(group.GroupDescription));
-                parameter.AppendFormat("{0}={1}&", "pictureGroup", HttpUtility.HtmlEncode(group.GroupPhoto));
+                // parameter.AppendFormat("{0}={1}&", "pictureGroup", HttpUtility.HtmlEncode(group.GroupPhoto));
 
                 WebClient wcCreateGroup = new WebClient();
                 wcCreateGroup.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
@@ -104,8 +105,8 @@ namespace TopApps.ViewModels
                     user.Password = item.SelectToken("password").ToString();
                     user.FbId = item.SelectToken("fb_id").ToString();
                     user.Email = item.SelectToken("email").ToString();
-                    user.PhoneNumber = int.Parse(item.SelectToken("phone_number").ToString());
-                    user.Photo = item.SelectToken("user_photo").ToString();
+                    user.PhoneNumber = item.SelectToken("phone_number").ToString();
+                    user.Photo = new BitmapImage(new Uri(item.SelectToken("user_photo").ToString()));
                     user.FbToken = item.SelectToken("fb_token").ToString();
                     user.FbTokenValidTime = item.SelectToken("fb_token_valid_time").ToString();
                     _searchUserCollection.Add(user);
@@ -156,8 +157,8 @@ namespace TopApps.ViewModels
                     user.Password = item.SelectToken("password").ToString();
                     user.FbId = item.SelectToken("fb_id").ToString();
                     user.Email = item.SelectToken("email").ToString();
-                    user.PhoneNumber = int.Parse(item.SelectToken("phone_number").ToString());
-                    user.Photo = item.SelectToken("user_photo").ToString();
+                    user.PhoneNumber = item.SelectToken("phone_number").ToString();
+                    user.Photo = new BitmapImage(new Uri(Resource.MEDIA_URL + item.SelectToken("user_photo").ToString(), UriKind.Absolute));
                     user.FbToken = item.SelectToken("fb_token").ToString();
                     user.FbTokenValidTime = item.SelectToken("fb_token_valid_time").ToString();
                     _memberGroupsCollection.Add(user);

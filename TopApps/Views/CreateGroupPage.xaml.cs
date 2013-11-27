@@ -45,13 +45,12 @@ namespace TopApps
             group.CreatorId = "2";
             group.GroupName = tbGroupName.Text;
             group.GroupDescription = tbDescription.Text;
-            group.GroupPhoto = groupPicture.Source.ToString();
+            group.GroupPhoto = groupPicture.Source;
             
             if (_viewModels.CreateGroup(group))
             {
                 NavigationService.Navigate(new Uri("/Views/GroupPage.xaml", UriKind.Relative));
             }
-
         }
 
         public void PhotoChoosen_Completed(object sender, PhotoResult e)

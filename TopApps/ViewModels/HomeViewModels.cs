@@ -10,17 +10,23 @@ using TopApps.Models;
 using System.Windows;
 using TopApps.Helpers;
 using Newtonsoft.Json;
+using TopApps.Models.JSONResponse;
+using System.Windows.Media.Imaging;
 
 namespace TopApps.ViewModels
 {
     class HomeViewModels : BindableBase
     {
-        private string URL = Resource.URL;
+        #region Attribute
+
+        private string URL = Resource.BASE_URL;
         private User _user;
         private ObservableCollection<Group> _groupCollection;
         private ObservableCollection<Event> _eventCollection;
-       
-        #region ObservableCollection
+
+        #endregion
+
+        #region Getter Setter
 
         public ObservableCollection<Event> EventCollection
         {
@@ -47,130 +53,122 @@ namespace TopApps.ViewModels
             _user = new User();
             _groupCollection = new ObservableCollection<Group>();
             _eventCollection = new ObservableCollection<Event>();
-            //this.WCEvent();
-            this.WCUser();
         }
+
+        #region ILoadable
+
+        public void Load()
+        {
+            this.WCUser();
+            this.WCEvent();
+            this.WCGroup();
+        }
+
+        public void Refresh()
+        {
+            
+        }
+
+        #endregion
 
         #region Web Client
         public void WCUser()
         {
             WebClient wcUser = new WebClient();
-            wcUser.DownloadStringCompleted += new DownloadStringCompletedEventHandler(DownloadProfile);
+            wcUser.DownloadStringCompleted += new DownloadStringCompletedEventHandler(DownloadProfileComplete);
             wcUser.DownloadStringAsync(new Uri(URL + "user/get_user_info?user_id=2"));
         }
 
         public void WCGroup()
         {
             WebClient wcGroup = new WebClient();
-            wcGroup.DownloadStringCompleted += new DownloadStringCompletedEventHandler(DownloadGroup);
+            wcGroup.DownloadStringCompleted += new DownloadStringCompletedEventHandler(DownloadGroupComplete);
             wcGroup.DownloadStringAsync(new Uri(URL + "user/get_user_group?user_id=6"));
         }
 
         public void WCEvent()
         {
             WebClient wcEvent = new WebClient();
-            wcEvent.DownloadStringCompleted += new DownloadStringCompletedEventHandler(DownloadEvent);
-            wcEvent.DownloadStringAsync(new Uri(URL + "user/get_user_event?user_id=6"));
+            wcEvent.DownloadStringCompleted += new DownloadStringCompletedEventHandler(DownloadEventComplete);
+            Uri uri = new Uri(URL + "user/get_user_event?user_id=2");
+            wcEvent.DownloadStringAsync(uri);
         }
 
         #endregion
 
 
         #region DownloadString
-        private void DownloadEvent(object sender, DownloadStringCompletedEventArgs e)
+        private void DownloadEventComplete(object sender, DownloadStringCompletedEventArgs e)
         {
             try
             {
-                JObject joEvent = JObject.Parse(e.Result);
-                JArray jaEvent = JArray.Parse(joEvent.SelectToken("data").ToString());
                 EventCollection.Clear();
-                foreach (var item in jaEvent)
+                GetUserEventResponse response = JsonConvert.DeserializeObject<GetUserEventResponse>(e.Result);
+                foreach (UserEventData item in response.data)
                 {
-                    Event events = new Event();
-                    events.EventId = int.Parse(item.SelectToken("event_id").ToString());
-                    events.GroupId = int.Parse(item.SelectToken("group_id").ToString());
-                    events.EventName = item.SelectToken("event_name").ToString();
-                    events.CreatorUserId = int.Parse(item.SelectToken("creator_user_id").ToString());
-                    events.LocationName = item.SelectToken("location_name").ToString();
-                    events.Latitude = double.Parse(item.SelectToken("latitude").ToString());
-                    events.Longitude = double.Parse(item.SelectToken("longitude").ToString());
-                    events.EventTime = DateTime.Parse(item.SelectToken("event_time").ToString());
-                    events.CancelTime = DateTime.Parse(item.SelectToken("cancel_time").ToString());
-                    EventCollection.Add(events);
+                    EventCollection.Add(new Event(int.Parse(item.event_id), int.Parse(item.creator_user_id), int.Parse(item.group_id), item.event_name, item.location_name, Double.Parse(item.latitude), Double.Parse(item.longitude), DateTime.Parse(item.event_time), DateTime.Parse(item.cancel_time)));
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show(ex.Message);
+                // MessageBox.Show("Load event gagal");
             }
         }
 
-        private void DownloadGroup(object sender, DownloadStringCompletedEventArgs e)
+        private void DownloadGroupComplete(object sender, DownloadStringCompletedEventArgs e)
         {
             try
             {
-                JObject joGroup = JObject.Parse(e.Result);
-                JArray jaGroup = JArray.Parse(joGroup.SelectToken("data").ToString());
                 GroupCollection.Clear();
+                GetUserGroupResponse response = JsonConvert.DeserializeObject<GetUserGroupResponse>(e.Result);
 
-                foreach (var item in jaGroup)
+                foreach (UserGroupData item in response.data)
                 {
-                    Group group = new Group();
-                    group.GroupId = item.SelectToken("group_id").ToString();
-                    group.CreatorId = item.SelectToken("creator_user_id").ToString();
-                    group.GroupName = item.SelectToken("group_name").ToString();
-                    group.GroupDescription = item.SelectToken("group_description").ToString();
-                    group.GroupPhoto = item.SelectToken("group_photo").ToString();
-                    _groupCollection.Add(group);
+                    GroupCollection.Add(new Group(item.group_id, item.group_name, item.group_description, item.group_photo));
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show(ex.Message);
+                // MessageBox.Show("Load group gagal");
             }
         }
 
-        private void DownloadProfile(object sender, DownloadStringCompletedEventArgs e)
+        private void DownloadProfileComplete(object sender, DownloadStringCompletedEventArgs e)
         {
             try
             {
-                User user = new User();
-                JObject joUser = JObject.Parse(e.Result);
-   
-                user.UserId = joUser.SelectToken("data").SelectToken("user_id").ToString();
-                user.Username = joUser.SelectToken("data").SelectToken("user_name").ToString();
-                user.Email = joUser.SelectToken("data").SelectToken("email").ToString();
-                user.PhoneNumber = Int32.Parse(joUser.SelectToken("data").SelectToken("phone_number").ToString());
-                user.Photo = joUser.SelectToken("data").SelectToken("user_photo").ToString();
+                GetUserInfoResponse response = JsonConvert.DeserializeObject<GetUserInfoResponse>(e.Result);
 
-                UserProfile = user;
+                this.UserProfile.UserId = response.data.user_id;
+                this.UserProfile.Username = response.data.user_name;
+                this.UserProfile.Email = response.data.email;
+                this.UserProfile.PhoneNumber = response.data.phone_number;
+                this.UserProfile.Photo = new BitmapImage(new Uri(Resource.MEDIA_URL + response.data.user_photo, UriKind.Absolute));
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                MessageBox.Show(exception.ToString());
+               //  MessageBox.Show("Load user gagal");
             }
         }
-            #endregion
+        #endregion
 
 
-         #region Command
+        #region Command
 
-            
-           
+        private void SetEventId(object parameter)
+        {
+            Event selectItemData = parameter as Event;
 
-            private void SetEventId(object parameter)
-            {
-                Event selectItemData = parameter as Event;
+            if(selectItemData != null)
+                Navigation.Id = selectItemData.EventId;
+        }
 
-                if(selectItemData != null)
-                    Navigation.Id = selectItemData.EventId;
-            }
+        private bool CanSetEventId(object parameter)
+        {
+            return true;
+        }
 
-            private bool CanSetEventId(object parameter)
-            {
-                return true;
-            }
-            #endregion
-        
+        #endregion
+
     }
 }

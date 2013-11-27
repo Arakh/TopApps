@@ -18,26 +18,20 @@ namespace TopApps
 {
     public partial class HomePage : PhoneApplicationPage
     {
-        private HomeViewModels _profileVM;
-        private HomeViewModels _groupVM;
-        private HomeViewModels _eventVM;
-        private HomeViewModels _tempProfileVM;
-        private HomeViewModels _tempGroupVM;
-        private HomeViewModels _tempEventVM;
+        private HomeViewModels vm;
 
         public HomePage()
         {
-            _profileVM = new HomeViewModels();
-            _groupVM = new HomeViewModels();
-            _eventVM = new HomeViewModels();
-            _tempProfileVM = _profileVM;
-            _tempGroupVM = _groupVM;
-            _tempEventVM = _eventVM;
-
             InitializeComponent();
 
-            ProfileItem.DataContext = _profileVM.UserProfile;
-            this.DataContext = _profileVM;
+            this.vm = new HomeViewModels();
+            this.DataContext = vm;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            this.vm.Load();
         }
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)

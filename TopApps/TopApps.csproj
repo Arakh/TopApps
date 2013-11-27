@@ -90,6 +90,9 @@
     <Compile Include="Models\BindableBase.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\JSONResponse\GetUserEventResponse.cs" />
+    <Compile Include="Models\JSONResponse\GetUserGroupResponse.cs" />
+    <Compile Include="Models\JSONResponse\GetUserInfoResponse.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Punishment.cs" />
     <Compile Include="Models\User.cs" />
@@ -185,13 +188,10 @@
   <ItemGroup>
     <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit">
-      <HintPath>..\..\..\Visual Studio 2012\Projects\hyjabs\Hyjabs\Bin\Release\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+      <HintPath>..\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\Visual Studio 2012\Projects\hyjabs\Hyjabs\Bin\Release\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="RestSharp.WindowsPhone">
-      <HintPath>..\..\..\Visual Studio 2012\Projects\hyjabs\Hyjabs\Bin\Release\RestSharp.WindowsPhone.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\sl4\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>

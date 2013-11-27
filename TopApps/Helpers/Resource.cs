@@ -8,11 +8,7 @@ namespace TopApps
 {
     public static class Resource
     {
-        public static string url = "http://project.aditiarakhmat.com/TopApps/index.php/";
-
-        public static string URL
-        {
-            get { return "http://project.aditiarakhmat.com/TopApps/index.php/"; }
-        }
+        public const string MEDIA_URL = "http://project.aditiarakhmat.com/TopApps/image/";
+        public const string BASE_URL = "http://project.aditiarakhmat.com/TopApps/index.php/";
     }
 }

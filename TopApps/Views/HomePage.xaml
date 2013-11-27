@@ -77,7 +77,7 @@
             </controls:PivotItem>
 
 			<!--Pivot item two-->
-            <controls:PivotItem x:Name="ProfileItem" Header="My Profile">
+            <controls:PivotItem x:Name="ProfileItem" Header="My Profile" DataContext="{Binding UserProfile}">
                 <Grid>
                     <!--<ListBox x:Name="ProfileContent">
                         <ListBox.ItemTemplate>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace TopApps.Models
 {
@@ -12,14 +13,13 @@ namespace TopApps.Models
         private string _fbId;
         private string _password;
         private string _email;
-        private int _phoneNumber;
+        private string _phoneNumber;
         private string _username;
-        private string _photo;
+        private BitmapImage _photo;
         private string _fbToken;
         private string _fbTokenValidTime;
 
-
-        public User(string userId, string fbId, string username, string password, string email, int phoneNumber, string photo)
+        public User(string userId, string fbId, string username, string password, string email, string phoneNumber, string photo)
         {
             this.UserId = userId;
             this.FbId = fbId;
@@ -27,7 +27,7 @@ namespace TopApps.Models
             this.Password = password;
             this.Email = email;
             this.PhoneNumber = phoneNumber;
-            this.Photo = photo;
+            this.Photo = new BitmapImage(new Uri(Resource.MEDIA_URL + photo, UriKind.Absolute));
         }
 
         public User()
@@ -37,7 +37,7 @@ namespace TopApps.Models
 
 
 
-        public int PhoneNumber
+        public string PhoneNumber
         {
             get { return _phoneNumber; }
             set { SetProperty(ref this._phoneNumber, value); }
@@ -73,7 +73,7 @@ namespace TopApps.Models
             set { SetProperty( ref this._username, value); }
         }
 
-        public string Photo
+        public BitmapImage Photo
         {
             get { return _photo; }
             set { SetProperty(ref this._photo, value); }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace TopApps.Models
 {
@@ -12,20 +14,20 @@ namespace TopApps.Models
         private string _creatorId;
         private string _groupName;
         private string _groupDescription;
-        private string _groupPhoto;
+        private ImageSource _groupPhoto;
 
         public Group(string groupId, string groupName, string groupDescription, string groupPhoto)
         {
             this.GroupId = groupId;
             this.GroupName = groupName;
             this.GroupDescription = groupDescription;
-            this.GroupPhoto = groupPhoto;
+            this.GroupPhoto = new BitmapImage(new Uri(Resource.BASE_URL + groupPhoto, UriKind.Absolute));
         }
 
         public  Group()
         { }
 
-        public string GroupPhoto
+        public ImageSource GroupPhoto
         {
             get { return _groupPhoto; }
             set { SetProperty(ref this._groupPhoto, value); }
