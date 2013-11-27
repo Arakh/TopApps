@@ -31,6 +31,9 @@ namespace TopApps.Models
             this.CancelTime = cancelTime;
         }
 
+        public  Event()
+        { }
+
         public DateTime CancelTime
         {
             get { return _cancelTime; }

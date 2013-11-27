@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -17,51 +18,70 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="White">
         <!--Pivot Control-->
-        <controls:Pivot Foreground="#FF66D2B7">
+        <controls:Pivot Foreground="#FF66D2B7" SelectionChanged="Pivot_SelectionChanged" >
             <!--Pivot item one-->
             <controls:PivotItem x:Name="EventItem" Header="Events" Margin="12,0" Foreground="#FF66D2B7" FontWeight="Bold">
-                <StackPanel>
-					<StackPanel x:Name="ImgComingEvent" HorizontalAlignment="Center" Height="200" Margin="0" VerticalAlignment="Top" Width="450">
-                		<StackPanel.Background>
-                			<ImageBrush Stretch="Fill" ImageSource="/TopApps;component/Assets/Images/GroupPicture.jpg"/>
-                		</StackPanel.Background>
-                		<StackPanel Height="70" Background="#FF66D2B7" Opacity="0.75" VerticalAlignment="Center" Margin="0,130,0,0">
-                			<TextBlock Height="26" Margin="10,0,135,0" TextWrapping="Wrap" Text="COMING UP" Foreground="White" FontWeight="Normal"/>
-                			<TextBlock x:Name="tbEventNameComingUp" TextWrapping="Wrap" Text="Event Name" Foreground="White" Margin="10,0,0,0" FontSize="32" FontWeight="Normal"/>
-                		</StackPanel>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal" >
-						<StackPanel x:Name="ImgEvent" Height="200" Width="210" Margin="5,25,30,0" HorizontalAlignment="Left">
-							<StackPanel.Background>
-								<ImageBrush Stretch="Fill" ImageSource="/TopApps;component/Assets/Images/GroupPicture.jpg"/>
-							</StackPanel.Background>
-							<StackPanel Background="#FF66D2B7" Height="50" Opacity="0.75" Margin="0,150,0,0">
-								<TextBlock x:Name="tbEventName" Margin="10,0,21,0" TextWrapping="Wrap" Text="Event Name" Foreground="White" FontSize="20"/>
-								<TextBlock x:Name="tbEventDate" Margin="10,0,21,0" TextWrapping="Wrap" Text="17 November 2013" Foreground="White" FontSize="16"/>
-							</StackPanel>						
-						</StackPanel>
-					</StackPanel>
-				</StackPanel>
+                <ListBox x:Name="EventContent" ItemsSource="{Binding EventCollection}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel x:Name="ImgComingEvent" Tap="ImgComingEvent_Tap" >
+                                <StackPanel  HorizontalAlignment="Center" Height="200" Margin="0" VerticalAlignment="Top" Width="450"   >
+                                    <StackPanel.Background>
+                                        <ImageBrush x:Name="imgEvent" Stretch="Fill" ImageSource="/TopApps;component/Assets/Images/GroupPicture.jpg" />
+                                    </StackPanel.Background>
+                                    <StackPanel Height="70" Background="#FF66D2B7" Opacity="0.75" VerticalAlignment="Center" Margin="0,130,0,0">
+                                        <TextBlock x:Name="tbEventName" x:Uid="{Binding EventId}" Margin="10,0,135,0" TextWrapping="Wrap" Text="{Binding EventName}" Foreground="White" FontWeight="Normal"/>
+                                        <TextBlock x:Name="tbEventDate" TextWrapping="Wrap" Text="{Binding EventTime}" Foreground="White" Margin="10,0,0,0" FontSize="32" FontWeight="Normal"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <!--<StackPanel Orientation="Horizontal" >
+                                    <StackPanel x:Name="ImgEvent" Height="200" Width="210" Margin="5,25,30,0" HorizontalAlignment="Left">
+                                        <StackPanel.Background>
+                                            <ImageBrush Stretch="Fill" ImageSource="/TopApps;component/Assets/Images/GroupPicture.jpg"/>
+                                        </StackPanel.Background>
+                                        <StackPanel Background="#FF66D2B7" Height="50" Opacity="0.75" Margin="0,150,0,0">
+                                            <TextBlock x:Name="tbEventName" Margin="10,0,21,0" TextWrapping="Wrap" Text="Event Name" Foreground="White" FontSize="20"/>
+                                            <TextBlock x:Name="tbEventDate" Margin="10,0,21,0" TextWrapping="Wrap" Text="17 November 2013" Foreground="White" FontSize="16"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>-->
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <!--<i:Interaction.Triggers>
+                        <i:EventTrigger EventName="EventSelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding EventId}">
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>-->
+                </ListBox>
             </controls:PivotItem>
 
             <!--Pivot item two-->
             <controls:PivotItem x:Name="GroupItem" Header="Groups">
-                <StackPanel x:Name="ImgGroupName" HorizontalAlignment="Center" Height="120" Margin="0,10,0,0" VerticalAlignment="Top" Width="440">
-                	<StackPanel.Background>
-                		<ImageBrush Stretch="Fill" ImageSource="/TopApps;component/Assets/Images/GroupPicture.jpg"/>
-                	</StackPanel.Background>
-                	<StackPanel Height="40" Background="#FF66D2B7" Opacity="0.75" Margin="0,80,0,0">
-                		<TextBlock x:Name="tbGroupName" Height="38" Margin="10,0,112,0" TextWrapping="Wrap" Text="Group Name" Foreground="White" FontSize="29.333"/>
-                	</StackPanel>
-                </StackPanel>
+                <Grid>
+                    <ListBox x:Name="GroupContent"  ItemsSource="{Binding GroupCollection}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel x:Name="ImgGroupName" HorizontalAlignment="Center" Height="120" Margin="0,10,0,0" VerticalAlignment="Top" Width="440">
+                                    <StackPanel.Background>
+                                        <ImageBrush Stretch="Fill" ImageSource="{Binding GroupPhoto}"/>
+                                    </StackPanel.Background>
+                                    <StackPanel Height="40" Background="#FF66D2B7" Opacity="0.75" Margin="0,80,0,0">
+                                        <TextBlock x:Name="tbGroupName" Height="38" Margin="10,0,112,0" TextWrapping="Wrap" Text="{Binding GroupName}" Foreground="White" FontSize="29.333"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </controls:PivotItem>
 
 			<!--Pivot item two-->
             <controls:PivotItem x:Name="ProfileItem" Header="My Profile">
                 <Grid>
-                    <ListBox x:Name="profileContent">
+                    <!--<ListBox x:Name="ProfileContent">
                         <ListBox.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate>-->
                 	            <StackPanel HorizontalAlignment="Center" Margin="-2,10,3,0" VerticalAlignment="Top" Width="450">
                 		            <StackPanel Height="164" Margin="10,0,40,0" Orientation="Horizontal">
                                         <StackPanel HorizontalAlignment="Left" Height="150" Margin="0" VerticalAlignment="Top" Width="150" Background="#FF00B487">
@@ -101,12 +121,21 @@
 							            </StackPanel>
 						            </StackPanel>
                 	            </StackPanel>
-                                </DataTemplate>
-                                </ListBox.ItemTemplate>
-                    </ListBox>
+                            <!--</DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>-->
                 </Grid>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
-    
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/people.groups.png" Text="new group" Click="ApplicationBarIconButton_Click" />            
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="Setting" />
+                <shell:ApplicationBarMenuItem Text="About" />
+                <shell:ApplicationBarMenuItem Text="Logout"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

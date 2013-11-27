@@ -27,6 +27,10 @@ namespace TopApps.Models
             this.NumberOfAbsent = numberOfAbsent;
             this.Status = status;
         }
+
+        public UserGroup()
+        { }
+
         public bool Status
         {
             get { return _status; }

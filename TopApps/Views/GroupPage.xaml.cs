@@ -10,14 +10,20 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
+using TopApps.ViewModels;
 
 namespace TopApps
 {
     public partial class GroupEventPage : PhoneApplicationPage
     {
+        private GroupViewModels _viewModels;
+
         public GroupEventPage()
         {
             InitializeComponent();
+            _viewModels = new GroupViewModels();
+            MembersContent.ItemsSource = _viewModels.GroupCollection;
+            EventContent.ItemsSource = _viewModels.EventGroupCollection;
         }
     }
 }

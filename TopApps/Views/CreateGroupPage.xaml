@@ -26,22 +26,35 @@
         <Canvas HorizontalAlignment="Left" Height="25" Margin="0" VerticalAlignment="Top" Width="480" Background="#FF66D2B7"/>
     <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-        	<StackPanel HorizontalAlignment="Center" Height="591" Margin="0,49,0,0" VerticalAlignment="Top" Width="456">
+        	<StackPanel HorizontalAlignment="Center" MinHeight="591" Margin="0,49,0,0" VerticalAlignment="Top" Width="456">
         		<StackPanel.Background>
         			<ImageBrush Stretch="Fill"/>
         		</StackPanel.Background>
         		<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="GROUP NAME" VerticalAlignment="Top" Foreground="#FF66D2B7" FontWeight="Bold" Margin="15,0,0,0"/>
-        		<TextBox x:Name="tbGroupName" Height="75" TextWrapping="Wrap" Text="TextBox" Width="450" Background="#BFFFFFFF" BorderBrush="#FF66D2B7" Margin="3,0" Foreground="#FF66D2B7"/>
+        		<TextBox x:Name="tbGroupName" Height="75" TextWrapping="Wrap"  Width="450" Background="#BFFFFFFF" BorderBrush="#FF66D2B7" Margin="3,0" Foreground="#FF66D2B7"/>
         		<TextBlock Margin="15,15,266,0" TextWrapping="Wrap" Foreground="#FF66D2B7" FontWeight="Bold" Height="30" Text="DESCRIPTION
 "/>
-        		<TextBox x:Name="tbDescription" Height="250" TextWrapping="Wrap" Text="TextBox" BorderBrush="#FF66D2B7" Foreground="#FF66D2B7"/>
+        		<TextBox x:Name="tbDescription" Height="250" TextWrapping="Wrap"  BorderBrush="#FF66D2B7" Foreground="#FF66D2B7"/>
         		<TextBlock Margin="15,15,266,0" TextWrapping="Wrap" Foreground="#FF66D2B7" FontWeight="Bold" Height="30" Text="GROUP PICTURE
 "/>
-        		<StackPanel Margin="15,0" Background="#FF66D2B7">
-        			<Image x:Name="groupPicture" Margin="3" Source="/TopApps;component/Assets/Images/AddGroupPicture.jpg" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        		</StackPanel>
-        	</StackPanel>
+                <StackPanel Margin="15,0" Background="#FF66D2B7">
+                    <Image x:Name="groupPicture" Margin="3" Source="/TopApps;component/Assets/Images/AddGroupPicture.jpg" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" Tap="groupPicture_Tap"/>
+                </StackPanel>
+            </StackPanel>
+            <Popup x:Name="popupGroupPicture" Margin="10,200,0,0"  >
+                <Border BorderThickness="1" BorderBrush="{StaticResource PhoneTextLowContrastBrush}" >
+                    <StackPanel Background="Aquamarine"  Width="400" Height="200" >
+                        <TextBlock Text="Choose your source picture" Margin="15,10,0,0"/>
+                        <Button x:Name="galleryButton" Content="Gallery" Click="galleryButton_Click"/>
+                        <Button x:Name="cameraButton" Content="Camera" Tap="cameraButton_Tap" />
+                    </StackPanel>
+                </Border>
+            </Popup>
         </Grid>
     </Grid>
-
-</phone:PhoneApplicationPage>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton x:Name="doneAppBar" IconUri="/Assets/AppBar/check.png" Text="Done" IsEnabled="False" Click="doneAppBar_Click" />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+    </phone:PhoneApplicationPage>

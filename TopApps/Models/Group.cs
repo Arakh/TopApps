@@ -9,6 +9,7 @@ namespace TopApps.Models
     class Group : BindableBase
     {
         private string _groupId;
+        private string _creatorId;
         private string _groupName;
         private string _groupDescription;
         private string _groupPhoto;
@@ -20,6 +21,9 @@ namespace TopApps.Models
             this.GroupDescription = groupDescription;
             this.GroupPhoto = groupPhoto;
         }
+
+        public  Group()
+        { }
 
         public string GroupPhoto
         {
@@ -43,6 +47,12 @@ namespace TopApps.Models
         {
             get { return _groupId; }
             set { SetProperty(ref this._groupId, value); }
+        }
+
+        public string CreatorId
+        {
+            get { return _creatorId; }
+            set { SetProperty(ref this._creatorId, value); }
         }
     }
 }

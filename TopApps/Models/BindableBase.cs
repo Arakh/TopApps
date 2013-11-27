@@ -36,7 +36,8 @@ namespace TopApps.Models
             return true;
         }
 
-        /// <summary>
+        
+        // <summary>
         /// Notifies listeners that a property value has changed.
         /// </summary>
         /// <param name="propertyName">Name of the property used to notify listeners.  This
@@ -50,5 +51,7 @@ namespace TopApps.Models
                 eventHandler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+
     }
 }

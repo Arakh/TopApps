@@ -15,6 +15,8 @@ namespace TopApps.Models
         private int _phoneNumber;
         private string _username;
         private string _photo;
+        private string _fbToken;
+        private string _fbTokenValidTime;
 
 
         public User(string userId, string fbId, string username, string password, string email, int phoneNumber, string photo)
@@ -75,6 +77,18 @@ namespace TopApps.Models
         {
             get { return _photo; }
             set { SetProperty(ref this._photo, value); }
+        }
+
+        public string FbToken
+        {
+            get { return _fbToken; }
+            set { _fbToken = value; }
+        }
+
+        public string FbTokenValidTime
+        {
+            get { return _fbTokenValidTime; }
+            set { _fbTokenValidTime = value; }
         }
     }
 }
