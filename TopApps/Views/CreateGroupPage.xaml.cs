@@ -19,7 +19,7 @@ namespace TopApps
 {
     public partial class CreateGroupPage : PhoneApplicationPage
     {
-        private Stream _bitmapGroupPicture;
+        Stream _bitmapGroupPicture;
             
         private GroupViewModels _viewModels;
 
@@ -33,24 +33,27 @@ namespace TopApps
 
         }
 
-        private void groupPicture_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        private void groupPicture_Tap(object sender, RoutedEventArgs e)
         {
-            popupGroupPicture.IsOpen = true;
+            //popupGroupPicture.IsOpen = true;
+            PhotoChooserTask photoChooser = new PhotoChooserTask();
+            photoChooser.Completed += new EventHandler<PhotoResult>(PhotoChoosen_Completed);
+            photoChooser.Show();
         }
 
         private void doneAppBar_Click(object sender, EventArgs e)
         {
             _viewModels = new GroupViewModels("create");
-            TopApps.Models.Group group = new TopApps.Models.Group();
-            group.CreatorId = "2";
-            group.GroupName = tbGroupName.Text;
-            group.GroupDescription = tbDescription.Text;
-            group.GroupPhoto = groupPicture.Source;
+            //TopApps.Models.Group group = new TopApps.Models.Group();
+            //group.CreatorId = "2";
+            //group.GroupName = tbGroupName.Text;
+            //group.GroupDescription = tbDescription.Text;
+            //group.GroupPhoto = groupPicture.Source;
             
-            if (_viewModels.CreateGroup(group))
-            {
-                NavigationService.Navigate(new Uri("/Views/GroupPage.xaml", UriKind.Relative));
-            }
+            //if (_viewModels.CreateGroup(group))
+            //{
+            //    NavigationService.Navigate(new Uri("/Views/GroupPage.xaml", UriKind.Relative));
+            //}
         }
 
         public void PhotoChoosen_Completed(object sender, PhotoResult e)
@@ -62,15 +65,17 @@ namespace TopApps
                 BitmapImage bmp = new BitmapImage();
                 bmp.SetSource(e.ChosenPhoto);
                 groupPicture.Source = bmp;
-                popupGroupPicture.IsOpen = false;
+                
             }
+            //popupGroupPicture.IsOpen = false;
+            ContentPanel.Opacity = 0.25;
         }
 
         private void galleryButton_Click(object sender, RoutedEventArgs e)
         {
-            PhotoChooserTask photoChooser = new PhotoChooserTask();
-            photoChooser.Completed += new EventHandler<PhotoResult>(PhotoChoosen_Completed);
-            photoChooser.Show();
+            PhotoChooserTask pct = new PhotoChooserTask();
+            pct.Completed += new EventHandler<PhotoResult>(PhotoChoosen_Completed);
+            pct.Show();
         }
 
 
@@ -79,6 +84,13 @@ namespace TopApps
             CameraCaptureTask cameraCapture = new CameraCaptureTask();
             cameraCapture.Completed += new EventHandler<PhotoResult>(PhotoChoosen_Completed);
             cameraCapture.Show();
+        }
+
+        private void groupPicture_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            PhotoChooserTask pct = new PhotoChooserTask();
+            pct.Completed += new EventHandler<PhotoResult>(PhotoChoosen_Completed);
+            pct.Show();
         }
 
 

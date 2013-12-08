@@ -36,12 +36,12 @@ namespace TopApps
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Uri("/Views/CreateGroupPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Views/GroupPage.xaml", UriKind.Relative));
         }
 
         private void ImgComingEvent_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/EventPage.xaml?eventId=", UriKind.Relative));
+            //NavigationService.Navigate(new Uri("/EventPage.xaml?eventId=", UriKind.Relative));
         }
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -53,6 +53,26 @@ namespace TopApps
             //if(strTag == "EventItem")
             //    this.wc
         }
+
+
+        private void newGroupApp_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Views/CreateGroupPage.xaml", UriKind.Relative));
+        }
+
+        private void ItemsSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var eventId = ((Models.Event)EventContent.SelectedValue).EventId;
+            NavigationService.Navigate(new Uri("/Views/EventPage.xaml?eventId=" + eventId, UriKind.Relative));
+         }
+
+        private void GroupContent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var groupId = ((Models.Group)GroupContent.SelectedValue).GroupId;
+            NavigationService.Navigate(new Uri("/Views/GroupPage.xaml?groupId=" + groupId, UriKind.Relative));
+        }
+
+     
 
         #region Command
         #endregion

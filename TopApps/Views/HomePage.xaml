@@ -7,6 +7,7 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:ec="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -18,56 +19,54 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="White">
         <!--Pivot Control-->
-        <controls:Pivot Foreground="#FF66D2B7" SelectionChanged="Pivot_SelectionChanged" >
+        <controls:Pivot Foreground="#FF66D2B7" SelectionChanged="Pivot_SelectionChanged"  >
             <!--Pivot item one-->
             <controls:PivotItem x:Name="EventItem" Header="Events" Margin="12,0" Foreground="#FF66D2B7" FontWeight="Bold">
-                <ListBox x:Name="EventContent" ItemsSource="{Binding EventCollection}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel x:Name="ImgComingEvent" Tap="ImgComingEvent_Tap" >
-                                <StackPanel  HorizontalAlignment="Center" Height="200" Margin="0" VerticalAlignment="Top" Width="450"   >
-                                    <StackPanel.Background>
-                                        <ImageBrush x:Name="imgEvent" Stretch="Fill" ImageSource="/TopApps;component/Assets/Images/GroupPicture.jpg" />
-                                    </StackPanel.Background>
-                                    <StackPanel Height="70" Background="#FF66D2B7" Opacity="0.75" VerticalAlignment="Center" Margin="0,130,0,0">
-                                        <TextBlock x:Name="tbEventName" x:Uid="{Binding EventId}" Margin="10,0,135,0" TextWrapping="Wrap" Text="{Binding EventName}" Foreground="White" FontWeight="Normal"/>
-                                        <TextBlock x:Name="tbEventDate" TextWrapping="Wrap" Text="{Binding EventTime}" Foreground="White" Margin="10,0,0,0" FontSize="32" FontWeight="Normal"/>
-                                    </StackPanel>
-                                </StackPanel>
-                                <!--<StackPanel Orientation="Horizontal" >
-                                    <StackPanel x:Name="ImgEvent" Height="200" Width="210" Margin="5,25,30,0" HorizontalAlignment="Left">
+                <Grid>
+                    <ListBox x:Name="EventContent" ItemsSource="{Binding EventCollection}" SelectionChanged="ItemsSelectionChanged"
+                             SelectedIndex="{Binding ListSelectedEvent, Mode=TwoWay}"   HorizontalAlignment="Center">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel x:Name="ImgComingEvent" Tap="ImgComingEvent_Tap" Margin="0,25,0,0" HorizontalAlignment="Center">
+                                    <StackPanel  HorizontalAlignment="Center" Height="150" Margin="0" VerticalAlignment="Top" Width="440"   >
                                         <StackPanel.Background>
-                                            <ImageBrush Stretch="Fill" ImageSource="/TopApps;component/Assets/Images/GroupPicture.jpg"/>
+                                            <ImageBrush x:Name="imgEvent" Stretch="Fill" ImageSource="{Binding ImgGroup}" />
                                         </StackPanel.Background>
-                                        <StackPanel Background="#FF66D2B7" Height="50" Opacity="0.75" Margin="0,150,0,0">
-                                            <TextBlock x:Name="tbEventName" Margin="10,0,21,0" TextWrapping="Wrap" Text="Event Name" Foreground="White" FontSize="20"/>
-                                            <TextBlock x:Name="tbEventDate" Margin="10,0,21,0" TextWrapping="Wrap" Text="17 November 2013" Foreground="White" FontSize="16"/>
+                                        <StackPanel Height="50" Background="#FF66D2B7" Opacity="0.75" VerticalAlignment="Center" Margin="0,100,0,0">
+                                            <TextBlock x:Name="tbEventName" x:Uid="{Binding EventId}" Margin="10,0,135,0" TextWrapping="Wrap" Text="{Binding EventName}" Foreground="White" FontWeight="Normal" FontSize="14"/>
+                                            <TextBlock x:Name="tbEventDate" TextWrapping="Wrap" Text="{Binding EventTime}" Foreground="White" Margin="10,0,0,0" FontSize="18" FontWeight="Bold"/>
                                         </StackPanel>
                                     </StackPanel>
-                                </StackPanel>-->
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                    <!--<i:Interaction.Triggers>
-                        <i:EventTrigger EventName="EventSelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding EventId}">
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>-->
-                </ListBox>
+                                    <!--<StackPanel Orientation="Horizontal" >
+                                        <StackPanel x:Name="ImgEvent" Height="200" Width="210" Margin="5,25,30,0" HorizontalAlignment="Left">
+                                            <StackPanel.Background>
+                                                <ImageBrush Stretch="Fill" ImageSource="/TopApps;component/Assets/Images/GroupPicture.jpg"/>
+                                            </StackPanel.Background>
+                                            <StackPanel Background="#FF66D2B7" Height="50" Opacity="0.75" Margin="0,150,0,0">
+                                                <TextBlock x:Name="tbEventName" Margin="10,0,21,0" TextWrapping="Wrap" Text="Event Name" Foreground="White" FontSize="20"/>
+                                                <TextBlock x:Name="tbEventDate" Margin="10,0,21,0" TextWrapping="Wrap" Text="17 November 2013" Foreground="White" FontSize="16"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>-->
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </controls:PivotItem>
 
             <!--Pivot item two-->
-            <controls:PivotItem x:Name="GroupItem" Header="Groups">
+            <controls:PivotItem x:Name="GroupItem" Header="Groups" Margin="12,0">
                 <Grid>
-                    <ListBox x:Name="GroupContent"  ItemsSource="{Binding GroupCollection}">
+                    <ListBox x:Name="GroupContent"  ItemsSource="{Binding GroupCollection}" VerticalAlignment="Top" VerticalContentAlignment="Top" HorizontalAlignment="Center" SelectionChanged="GroupContent_SelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel x:Name="ImgGroupName" HorizontalAlignment="Center" Height="120" Margin="0,10,0,0" VerticalAlignment="Top" Width="440">
+                                <StackPanel x:Name="ImgGroupName"  Height="150"  VerticalAlignment="Top" Width="440" HorizontalAlignment="Center" Margin="0,25,0,0">
                                     <StackPanel.Background>
                                         <ImageBrush Stretch="Fill" ImageSource="{Binding GroupPhoto}"/>
                                     </StackPanel.Background>
-                                    <StackPanel Height="40" Background="#FF66D2B7" Opacity="0.75" Margin="0,80,0,0">
-                                        <TextBlock x:Name="tbGroupName" Height="38" Margin="10,0,112,0" TextWrapping="Wrap" Text="{Binding GroupName}" Foreground="White" FontSize="29.333"/>
+                                    <StackPanel Height="50" Background="#FF66D2B7" Opacity="0.75" Margin="0,100,0,0">
+                                        <TextBlock x:Name="tbGroupName" Height="38" Margin="10,5,112,0" TextWrapping="Wrap" Text="{Binding GroupName}" Foreground="White" FontSize="29.333" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
@@ -76,22 +75,43 @@
                 </Grid>
             </controls:PivotItem>
 
-			<!--Pivot item two-->
-            <controls:PivotItem x:Name="ProfileItem" Header="My Profile" DataContext="{Binding UserProfile}">
+            <!--Pivot item two-->
+            <controls:PivotItem x:Name="ProfileItem" Header="My Profile" DataContext="{Binding UserProfile}" Margin="12,0">
                 <Grid>
                     <!--<ListBox x:Name="ProfileContent">
                         <ListBox.ItemTemplate>
                             <DataTemplate>-->
-                	            <StackPanel HorizontalAlignment="Center" Margin="-2,10,3,0" VerticalAlignment="Top" Width="450">
-                		            <StackPanel Height="164" Margin="10,0,40,0" Orientation="Horizontal">
-                                        <StackPanel HorizontalAlignment="Left" Height="150" Margin="0" VerticalAlignment="Top" Width="150" Background="#FF00B487">
-                                            <Image x:Name="ImgProfile" Source="{Binding Photo}" />
-                                        </StackPanel>
-                                        <StackPanel Margin="0,0,0,0" Width="237">
-                				            <TextBlock x:Name="tbName" Height="Auto" Margin="10,0" TextWrapping="Wrap" Text="{Binding Username}" FontWeight="Bold" FontSize="24"/>
-                				            <TextBlock x:Name="tbNumberPhone" Height="Auto" Margin="10,10,10,0" TextWrapping="Wrap" Text="{Binding PhoneNumber}" FontSize="20"/>
-								            <TextBlock x:Name="tbMailAddress" Height="Auto" Margin="10,0" TextWrapping="Wrap" Text="{Binding Email}" FontSize="20"/>
-								            <StackPanel Orientation="Horizontal" Margin="10,0,0,0" HorizontalAlignment="Left" >
+                    <StackPanel HorizontalAlignment="Center" Margin="0,25,0,0" VerticalAlignment="Top" Width="450">
+                        <StackPanel Margin="0,0,0,0" Orientation="Vertical">
+                            <StackPanel HorizontalAlignment="Center" Height="150" Margin="0" VerticalAlignment="Top" Width="150" Background="#FF00B487">
+                                <Image x:Name="ImgProfile" Source="{Binding Photo}" />
+                            </StackPanel>
+                            <StackPanel Margin="0,0,0,0">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,25,0,0">
+                                    <StackPanel Width="75" Height="75" Background="#FF66D2B7" >
+                                        <Image x:Name="IcoUsername" Source="/Assets/Images/IcoUsername.png" />
+                                    </StackPanel>
+                                    <StackPanel Height="50" Width="350" Margin="0,0,0,0" Background="#FF00B487" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                        <TextBlock x:Name="tbUsername" TextWrapping="Wrap" Text="{Binding Username}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="28" Margin="5,0,0,0" Foreground="White" TextTrimming="WordEllipsis"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,25,0,0">
+                                    <StackPanel Width="75" Height="75" Background="#FF66D2B7" >
+                                        <Image x:Name="IcoContact" Source="/Assets/Images/IcoContact.png" />
+                                    </StackPanel>
+                                    <StackPanel Height="50" Width="350" Margin="0,0,0,0" Background="#FF00B487" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                        <TextBlock x:Name="tbPhoneNumber" TextWrapping="Wrap" Text="{Binding PhoneNumber}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="28" Margin="5,0,0,0" Foreground="White"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,25,0,0">
+                                    <StackPanel Width="75" Height="75" Background="#FF66D2B7" >
+                                        <Image x:Name="ImgGroup" Source="/Assets/Images/IcoMail.png" />
+                                    </StackPanel>
+                                    <StackPanel Height="50" Width="350" Margin="0,0,0,0" Background="#FF00B487" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                        <TextBlock x:Name="tbEmailAddress" TextWrapping="Wrap" Text="{Binding Email}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="28" Margin="5,0,0,0" Foreground="White" TextTrimming="WordEllipsis"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <!--<StackPanel Orientation="Horizontal" Margin="10,0,0,0" HorizontalAlignment="Left" >
 									            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 										            <TextBlock x:Name="tbLateNumber" Text="0" TextAlignment="Center"  />
 										            <TextBlock Text="late"  />
@@ -108,10 +128,10 @@
 										            <TextBlock Text="0" HorizontalAlignment="Center"  />
 										            <TextBlock Text="absent" Width="65"  />
 									            </StackPanel>
-								            </StackPanel>
-							            </StackPanel>
-                		            </StackPanel>
-						            <TextBlock Text="MY SOMETHING" Margin="10,0,0,0" FontWeight="Bold" FontSize="24" />
+								            </StackPanel>-->
+                            </StackPanel>
+                        </StackPanel>
+                        <!--<TextBlock Text="MY SOMETHING" Margin="10,0,0,0" FontWeight="Bold" FontSize="24" />
 						            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
 							            <StackPanel Height="50" Width="350" Margin="0,0,0,0" Background="#FF00B487" HorizontalAlignment="Center" VerticalAlignment="Center" >
 								            <TextBlock x:Name="tbGroupNameProfile" TextWrapping="Wrap" Text="Group Name" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="29.333" Margin="5,0,0,0" Foreground="White"/>
@@ -119,9 +139,9 @@
                                         <StackPanel Width="75" Height="75" Background="#FF66D2B7" >
 									            <Image x:Name="ImgGroup"/>
 							            </StackPanel>
-						            </StackPanel>
-                	            </StackPanel>
-                            <!--</DataTemplate>
+						            </StackPanel>-->
+                    </StackPanel>
+                    <!--</DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>-->
                 </Grid>
@@ -130,7 +150,8 @@
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/people.groups.png" Text="new group" Click="ApplicationBarIconButton_Click" />            
+            <shell:ApplicationBarIconButton x:Name="newGroupApp" IconUri="/Assets/AppBar/new.png" Text="new group" Click="newGroupApp_Click" />
+            <shell:ApplicationBarIconButton x:Name="groupApp" IconUri="/Assets/AppBar/people.groups.png" Text="Group" Click="ApplicationBarIconButton_Click" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="Setting" />
                 <shell:ApplicationBarMenuItem Text="About" />

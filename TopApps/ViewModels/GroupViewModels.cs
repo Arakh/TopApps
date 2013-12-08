@@ -9,22 +9,23 @@ using System.Windows;
 using Newtonsoft.Json.Linq;
 using TopApps.Models;
 using System.Windows.Media.Imaging;
+using TopApps.Helpers;
 
 namespace TopApps.ViewModels
 {
     class GroupViewModels : BindableBase
     {
+
+        #region attribute
         private string URL = Resource.BASE_URL;
-        private ObservableCollection<Group> _groupCollection = new ObservableCollection<Group>();
+        private ObservableCollection<Group> _groupCollection ;
         private ObservableCollection<User> _memberGroupsCollection;
         private ObservableCollection<Event> _eventGroupCollection;
         private ObservableCollection<User> _searchUserCollection;
+        #endregion
 
-        internal ObservableCollection<User> SearchUserCollection
-        {
-            get { return _searchUserCollection; }
-            set { SetProperty(ref _searchUserCollection, value); }
-        }
+        #region setter getter
+
 
 
         public ObservableCollection<Event> EventGroupCollection
@@ -45,99 +46,71 @@ namespace TopApps.ViewModels
             get { return _groupCollection; }
             set { SetProperty(ref this._groupCollection, value); }
         }
+        #endregion
+
+        public void Load()
+        {
+            this.WCEventGroup();
+            this.WCMemberGroup();
+        }
 
         public GroupViewModels()
         {
+            _eventGroupCollection = new ObservableCollection<Event>();
+            _groupCollection = new ObservableCollection<Group>();
+            _memberGroupsCollection = new ObservableCollection<User>();
+            _searchUserCollection = new ObservableCollection<User>();
+        }
+
+
+        #region Web Client
+        public void WCMemberGroup()
+        {
             WebClient wcMemberGroup = new WebClient();
             wcMemberGroup.DownloadStringCompleted += new DownloadStringCompletedEventHandler(MemberGroup);
-            wcMemberGroup.DownloadStringAsync(new Uri(URL + "group/get_group_users?group_id=3"));
+            wcMemberGroup.DownloadStringAsync(new Uri(URL + "group/get_group_users?group_id="+Navigation.Id));
+        }
 
+        public void WCEventGroup()
+        {
             WebClient wcEventGroup = new WebClient();
             wcEventGroup.DownloadStringCompleted += new DownloadStringCompletedEventHandler(EventGroup);
-            wcEventGroup.DownloadStringAsync(new Uri(URL + "group/get_group_events?group_id=3")); 
+            wcEventGroup.DownloadStringAsync(new Uri(URL + "group/get_group_events?group_id="+Navigation.Id)); 
         }
+        #endregion
 
         public GroupViewModels(string view)
         { }
 
-        public void SearchUser(string query, string groupId)
-        {
-            WebClient wcSearch = new WebClient();
-            wcSearch.DownloadStringCompleted += new DownloadStringCompletedEventHandler(SearchUser);
-            wcSearch.DownloadStringAsync(new Uri(URL + "user/search_user?group_id="+groupId+"&query="+query));
-        }
-
-        public bool CreateGroup(Group group)
-        {
-            try
-            {
-                StringBuilder parameter = new StringBuilder();
-                parameter.AppendFormat("{0}={1}&", "creatorId", HttpUtility.HtmlEncode(group.CreatorId));
-                parameter.AppendFormat("{0}={1}&", "nameGroup", HttpUtility.HtmlEncode(group.GroupName));
-                parameter.AppendFormat("{0}={1}&", "descriptionGroup", HttpUtility.HtmlEncode(group.GroupDescription));
-                // parameter.AppendFormat("{0}={1}&", "pictureGroup", HttpUtility.HtmlEncode(group.GroupPhoto));
-
-                WebClient wcCreateGroup = new WebClient();
-                wcCreateGroup.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                wcCreateGroup.Headers[HttpRequestHeader.ContentLength] = parameter.Length.ToString();
-                wcCreateGroup.UploadStringCompleted += new UploadStringCompletedEventHandler(CreateGroup);
-                wcCreateGroup.UploadStringAsync(new Uri(URL + "group/creator_user_id"), "POST", parameter.ToString());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            return false;
-        }
-
-        private void SearchUser(object sender, DownloadStringCompletedEventArgs e)
-        {
-            try
-            {
-                JObject joSearch = JObject.Parse(e.Result);
-                JArray jaSearch = JArray.Parse(joSearch.SelectToken("data").ToString());
-                _searchUserCollection = new ObservableCollection<User>();
-                foreach(var item in jaSearch)
-                {
-                    User user = new User();
-                    user.UserId = item.SelectToken("user_id").ToString();
-                    user.Username = item.SelectToken("user_name").ToString();
-                    user.Password = item.SelectToken("password").ToString();
-                    user.FbId = item.SelectToken("fb_id").ToString();
-                    user.Email = item.SelectToken("email").ToString();
-                    user.PhoneNumber = item.SelectToken("phone_number").ToString();
-                    user.Photo = new BitmapImage(new Uri(item.SelectToken("user_photo").ToString()));
-                    user.FbToken = item.SelectToken("fb_token").ToString();
-                    user.FbTokenValidTime = item.SelectToken("fb_token_valid_time").ToString();
-                    _searchUserCollection.Add(user);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
+        
 
         private void EventGroup(object sender, DownloadStringCompletedEventArgs e)
         {
-            JObject joEvent = JObject.Parse(e.Result);
-            JArray jaEvent = JArray.Parse(joEvent.SelectToken("data").ToString());
-
-            _eventGroupCollection = new ObservableCollection<Event>();
-   
-            foreach (var item in jaEvent)
+            try
             {
-                Event eEvent = new Event();
-                eEvent.EventId = int.Parse(item.SelectToken("event_id").ToString());
-                eEvent.EventName = item.SelectToken("event_name").ToString();
-                eEvent.GroupId = int.Parse(item.SelectToken("group_id").ToString());
-                eEvent.CreatorUserId = int.Parse(item.SelectToken("creator_user_id").ToString());
-                eEvent.LocationName = item.SelectToken("location_name").ToString();
-                eEvent.Longitude = double.Parse(item.SelectToken("longitude").ToString());
-                eEvent.Latitude = double.Parse(item.SelectToken("latitude").ToString());
-                eEvent.EventTime = DateTime.Parse(item.SelectToken("event_time").ToString());
-                eEvent.CancelTime = DateTime.Parse(item.SelectToken("cancel_time").ToString());
-                _eventGroupCollection.Add(eEvent);
+                JObject joEvent = JObject.Parse(e.Result);
+                JArray jaEvent = JArray.Parse(joEvent.SelectToken("data").ToString());
+
+                _eventGroupCollection = new ObservableCollection<Event>();
+
+                foreach (var item in jaEvent)
+                {
+                    Event eEvent = new Event();
+                    eEvent.EventId = int.Parse(item.SelectToken("event_id").ToString());
+                    eEvent.EventName = item.SelectToken("event_name").ToString();
+                    eEvent.GroupId = int.Parse(item.SelectToken("group_id").ToString());
+                    eEvent.CreatorUserId = int.Parse(item.SelectToken("creator_user_id").ToString());
+                    eEvent.LocationName = item.SelectToken("location_name").ToString();
+                    eEvent.Longitude = double.Parse(item.SelectToken("longitude").ToString());
+                    eEvent.Latitude = double.Parse(item.SelectToken("latitude").ToString());
+                    eEvent.EventTime = DateTime.Parse(item.SelectToken("event_time").ToString());
+                    eEvent.CancelTime = DateTime.Parse(item.SelectToken("cancel_time").ToString());
+                    _eventGroupCollection.Add(eEvent);
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Load Event group gagal");
             }
         }
 
@@ -158,7 +131,8 @@ namespace TopApps.ViewModels
                     user.FbId = item.SelectToken("fb_id").ToString();
                     user.Email = item.SelectToken("email").ToString();
                     user.PhoneNumber = item.SelectToken("phone_number").ToString();
-                    user.Photo = new BitmapImage(new Uri(Resource.MEDIA_URL + item.SelectToken("user_photo").ToString(), UriKind.Absolute));
+                    user.Photo = item.SelectToken("user_photo").ToString();
+                        //new BitmapImage(new Uri(Resource.MEDIA_URL + item.SelectToken("user_photo").ToString(), UriKind.Absolute));
                     user.FbToken = item.SelectToken("fb_token").ToString();
                     user.FbTokenValidTime = item.SelectToken("fb_token_valid_time").ToString();
                     _memberGroupsCollection.Add(user);
@@ -170,10 +144,7 @@ namespace TopApps.ViewModels
             }
         }
 
-        public void CreateGroup(Object sender, UploadStringCompletedEventArgs e)
-        {
-            MessageBox.Show(e.Result.ToString());
-        }
+        
   
     }
 }

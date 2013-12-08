@@ -12,6 +12,8 @@ using TopApps.Helpers;
 using Newtonsoft.Json;
 using TopApps.Models.JSONResponse;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Input;
 
 namespace TopApps.ViewModels
 {
@@ -96,7 +98,6 @@ namespace TopApps.ViewModels
 
         #endregion
 
-
         #region DownloadString
         private void DownloadEventComplete(object sender, DownloadStringCompletedEventArgs e)
         {
@@ -111,7 +112,7 @@ namespace TopApps.ViewModels
             }
             catch (Exception)
             {
-                // MessageBox.Show("Load event gagal");
+                 MessageBox.Show("Load event gagal");
             }
         }
 
@@ -143,31 +144,14 @@ namespace TopApps.ViewModels
                 this.UserProfile.Username = response.data.user_name;
                 this.UserProfile.Email = response.data.email;
                 this.UserProfile.PhoneNumber = response.data.phone_number;
-                this.UserProfile.Photo = new BitmapImage(new Uri(Resource.MEDIA_URL + response.data.user_photo, UriKind.Absolute));
+                this.UserProfile.Photo = response.data.user_photo;
+                    //new BitmapImage(new Uri(Resource.MEDIA_URL + response.data.user_photo, UriKind.Absolute));
             }
             catch (Exception)
             {
                //  MessageBox.Show("Load user gagal");
             }
         }
-        #endregion
-
-
-        #region Command
-
-        private void SetEventId(object parameter)
-        {
-            Event selectItemData = parameter as Event;
-
-            if(selectItemData != null)
-                Navigation.Id = selectItemData.EventId;
-        }
-
-        private bool CanSetEventId(object parameter)
-        {
-            return true;
-        }
-
         #endregion
 
     }

@@ -15,7 +15,7 @@ namespace TopApps.Models
         private string _email;
         private string _phoneNumber;
         private string _username;
-        private BitmapImage _photo;
+        private string _photo;
         private string _fbToken;
         private string _fbTokenValidTime;
 
@@ -27,7 +27,8 @@ namespace TopApps.Models
             this.Password = password;
             this.Email = email;
             this.PhoneNumber = phoneNumber;
-            this.Photo = new BitmapImage(new Uri(Resource.MEDIA_URL + photo, UriKind.Absolute));
+            this.Photo = photo;
+                //new BitmapImage(new Uri(Resource.MEDIA_URL + photo, UriKind.Absolute));
         }
 
         public User()
@@ -73,7 +74,7 @@ namespace TopApps.Models
             set { SetProperty( ref this._username, value); }
         }
 
-        public BitmapImage Photo
+        public string Photo
         {
             get { return _photo; }
             set { SetProperty(ref this._photo, value); }

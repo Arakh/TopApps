@@ -100,10 +100,15 @@
     <Compile Include="Models\UserGroup.cs" />
     <Compile Include="Models\Vote.cs" />
     <Compile Include="Helpers\Resource.cs" />
+    <Compile Include="ViewModels\CreateGroupViewModels.cs" />
     <Compile Include="ViewModels\GroupViewModels.cs" />
     <Compile Include="ViewModels\HomeViewModels.cs" />
+    <Compile Include="ViewModels\SearchViewModels.cs" />
     <Compile Include="Views\CreateGroupPage.xaml.cs">
       <DependentUpon>CreateGroupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EventPage.xaml.cs">
+      <DependentUpon>EventPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GroupPage.xaml.cs">
       <DependentUpon>GroupPage.xaml</DependentUpon>
@@ -131,6 +136,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EventPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\GroupPage.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
@@ -170,8 +179,12 @@
     <Content Include="Assets\AppBar\calendar.gototoday.png" />
     <Content Include="Assets\AppBar\check.png" />
     <Content Include="Assets\AppBar\new.png" />
+    <Content Include="Assets\AppBar\outline.squares.png" />
     <Content Include="Assets\AppBar\people.groups.png" />
     <Content Include="Assets\Images\GroupBox.jpg" />
+    <Content Include="Assets\Images\IcoContact.png" />
+    <Content Include="Assets\Images\IcoMail.png" />
+    <Content Include="Assets\Images\IcoUsername.png" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -186,6 +199,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit">
       <HintPath>..\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>

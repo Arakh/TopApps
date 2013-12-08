@@ -11,19 +11,30 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using TopApps.ViewModels;
+using TopApps.Helpers;
 
 namespace TopApps
 {
     public partial class GroupEventPage : PhoneApplicationPage
     {
-        private GroupViewModels _viewModels;
+        private string groupId;
+        private GroupViewModels vm;
 
         public GroupEventPage()
         {
             InitializeComponent();
-            _viewModels = new GroupViewModels();
-            MembersContent.ItemsSource = _viewModels.GroupCollection;
-            EventContent.ItemsSource = _viewModels.EventGroupCollection;
+            vm = new GroupViewModels();
+        }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (NavigationContext.QueryString.TryGetValue("groupId", out groupId))
+            {
+                Navigation.Id = Convert.ToInt32(groupId);   
+            }
+            this.DataContext = vm;
+            vm.Load();
         }
     }
 }

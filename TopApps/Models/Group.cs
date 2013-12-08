@@ -14,20 +14,24 @@ namespace TopApps.Models
         private string _creatorId;
         private string _groupName;
         private string _groupDescription;
-        private ImageSource _groupPhoto;
+        private string _groupPhoto;
+    
 
         public Group(string groupId, string groupName, string groupDescription, string groupPhoto)
         {
             this.GroupId = groupId;
             this.GroupName = groupName;
             this.GroupDescription = groupDescription;
-            this.GroupPhoto = new BitmapImage(new Uri(Resource.BASE_URL + groupPhoto, UriKind.Absolute));
+            if (groupPhoto.Equals(""))
+                groupPhoto = "GroupPicture.jpg";
+            this.GroupPhoto = Resource.MEDIA_URL + groupPhoto;
+                //new BitmapImage(new Uri(Resource.MEDIA_URL + groupPhoto, UriKind.Absolute));
         }
 
         public  Group()
         { }
 
-        public ImageSource GroupPhoto
+        public string GroupPhoto
         {
             get { return _groupPhoto; }
             set { SetProperty(ref this._groupPhoto, value); }

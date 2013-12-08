@@ -17,6 +17,13 @@ namespace TopApps.Models
         private double _longitude;
         private DateTime _eventTime;
         private DateTime _cancelTime;
+        private string _imgGroup;
+
+        public string ImgGroup
+        {
+            get { return "/TopApps;component/Assets/Images/GroupPicture.jpg"; }
+            set { _imgGroup = "/TopApps;component/Assets/Images/GroupPicture.jpg"; }
+        }
 
         public Event(int eventId, int creatorUserId, int groupId, string eventName, string locationName, double latitude, double longitude, DateTime eventTime, DateTime cancelTime)
         {

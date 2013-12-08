@@ -41,7 +41,7 @@
                     <Image x:Name="groupPicture" Margin="3" Source="/TopApps;component/Assets/Images/AddGroupPicture.jpg" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" Tap="groupPicture_Tap"/>
                 </StackPanel>
             </StackPanel>
-            <Popup x:Name="popupGroupPicture" Margin="10,200,0,0"  >
+            <Popup x:Name="popupGroupPicture" Margin="28,200,0,0"  >
                 <Border BorderThickness="1" BorderBrush="{StaticResource PhoneTextLowContrastBrush}" >
                     <StackPanel Background="Aquamarine"  Width="400" Height="200" >
                         <TextBlock Text="Choose your source picture" Margin="15,10,0,0"/>
@@ -52,9 +52,5 @@
             </Popup>
         </Grid>
     </Grid>
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton x:Name="doneAppBar" IconUri="/Assets/AppBar/check.png" Text="Done" IsEnabled="False" Click="doneAppBar_Click" />
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
+
     </phone:PhoneApplicationPage>
