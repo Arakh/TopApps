@@ -68,8 +68,8 @@
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/calendar.gototoday.png" Text="new event" />
-            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/new.png" Text="Add People" />
+            <shell:ApplicationBarIconButton x:Name="newEvent" IconUri="/Assets/AppBar/calendar.gototoday.png" Text="new event" />
+            <shell:ApplicationBarIconButton x:Name="addPeople" IconUri="/Assets/AppBar/new.png" Text="Add People" Click="addPeople_Click"  />
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

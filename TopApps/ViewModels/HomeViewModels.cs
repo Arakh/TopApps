@@ -103,8 +103,8 @@ namespace TopApps.ViewModels
         {
             try
             {
-                EventCollection.Clear();
                 GetUserEventResponse response = JsonConvert.DeserializeObject<GetUserEventResponse>(e.Result);
+                EventCollection.Clear();
                 foreach (UserEventData item in response.data)
                 {
                     EventCollection.Add(new Event(int.Parse(item.event_id), int.Parse(item.creator_user_id), int.Parse(item.group_id), item.event_name, item.location_name, Double.Parse(item.latitude), Double.Parse(item.longitude), DateTime.Parse(item.event_time), DateTime.Parse(item.cancel_time)));

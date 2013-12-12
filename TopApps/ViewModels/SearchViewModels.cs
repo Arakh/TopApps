@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using TopApps.Helpers;
 using TopApps.Models;
+using TopApps.Models.JSONResponse;
 
 namespace TopApps.ViewModels
 {
@@ -26,6 +28,7 @@ namespace TopApps.ViewModels
 
         public SearchViewModels()
         {
+            _searchUserCollection = new ObservableCollection<User>();
         }
 
 
@@ -33,29 +36,19 @@ namespace TopApps.ViewModels
         {
             WebClient wcSearch = new WebClient();
             wcSearch.DownloadStringCompleted += new DownloadStringCompletedEventHandler(SearchUser);
-            wcSearch.DownloadStringAsync(new Uri(URL + "user/search_user?group_id=" + Navigation.Id + "&query=" + query));
+            wcSearch.DownloadStringAsync(new Uri(URL + "user/search_user?group_id=3&query=t"));
+            MessageBox.Show(Navigation.Id.ToString());
         }
 
         private void SearchUser(object sender, DownloadStringCompletedEventArgs e)
         {
             try
             {
-                JObject joSearch = JObject.Parse(e.Result);
-                JArray jaSearch = JArray.Parse(joSearch.SelectToken("data").ToString());
-                _searchUserCollection = new ObservableCollection<User>();
-                foreach (var item in jaSearch)
+                GetUserSearchResponse response = JsonConvert.DeserializeObject<GetUserSearchResponse>(e.Result);
+                SearchUserCollection.Clear();
+                foreach (UserSearchData item in response.data)
                 {
-                    User user = new User();
-                    user.UserId = item.SelectToken("user_id").ToString();
-                    user.Username = item.SelectToken("user_name").ToString();
-                    user.Password = item.SelectToken("password").ToString();
-                    user.FbId = item.SelectToken("fb_id").ToString();
-                    user.Email = item.SelectToken("email").ToString();
-                    user.PhoneNumber = item.SelectToken("phone_number").ToString();
-                    user.Photo = item.SelectToken("user_photo").ToString();
-                    user.FbToken = item.SelectToken("fb_token").ToString();
-                    user.FbTokenValidTime = item.SelectToken("fb_token_valid_time").ToString();
-                    _searchUserCollection.Add(user);
+                    SearchUserCollection.Add(new User(item.user_id,"",item.user_name,"",item.email,item.phone_number,item.user_photo));
                 }
             }
             catch (Exception ex)

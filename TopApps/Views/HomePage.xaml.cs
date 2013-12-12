@@ -72,9 +72,5 @@ namespace TopApps
             NavigationService.Navigate(new Uri("/Views/GroupPage.xaml?groupId=" + groupId, UriKind.Relative));
         }
 
-     
-
-        #region Command
-        #endregion
     }
 }

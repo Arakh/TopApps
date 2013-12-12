@@ -93,6 +93,7 @@
     <Compile Include="Models\JSONResponse\GetUserEventResponse.cs" />
     <Compile Include="Models\JSONResponse\GetUserGroupResponse.cs" />
     <Compile Include="Models\JSONResponse\GetUserInfoResponse.cs" />
+    <Compile Include="Models\JSONResponse\GetUserSearchResponse.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Punishment.cs" />
     <Compile Include="Models\User.cs" />

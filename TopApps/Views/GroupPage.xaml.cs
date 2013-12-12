@@ -36,5 +36,10 @@ namespace TopApps
             this.DataContext = vm;
             vm.Load();
         }
+
+        private void addPeople_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Views/SearchPage.xaml?groupId="+groupId, UriKind.Relative));
+        }
     }
 }

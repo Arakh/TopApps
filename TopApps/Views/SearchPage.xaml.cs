@@ -8,25 +8,34 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using TopApps.ViewModels;
+using TopApps.Helpers;
 
 namespace TopApps
 {
     public partial class SearchPage : PhoneApplicationPage
     {
-        private GroupViewModels _viewModels;
+        private SearchViewModels vm;
+        private string groupId;
 
         public SearchPage()
         {
             InitializeComponent();
+            vm = new SearchViewModels();
+            this.DataContext = vm.SearchUserCollection;
         }
 
         private void SearchAppBar_Click(object sender, EventArgs e)
         {
-            _viewModels = new GroupViewModels("search");
-            _viewModels.SearchUser(tbUsername.Text, "2");
-            SearchContent.ItemsSource = _viewModels.SearchUserCollection;
+            vm.SearchUser(groupId,tbUsername.Text);
         }
 
-       
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (NavigationContext.QueryString.TryGetValue("groupId", out groupId))
+            { }
+        }
+
     }
 }
